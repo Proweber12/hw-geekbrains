@@ -1,22 +1,23 @@
-class Matrix:
-    def __init__(self, *args):
-        self.args = args
+import re
+import datetime
 
-    def __str__(self):
-        return '\n'.join(map(str, self.args))
+class Date:
+    def __init__(self, date):
+        self.date = date
 
-    def __add__(self, other):
-        list_sum = []
-        for lists_vol in range(len(self.args)):
-            list_sum.append([])
-            for el in range(len(self.args[0])):
-                list_sum[lists_vol].append(self.args[lists_vol][el] + other.args[lists_vol][el])
-        return '\n'.join(map(str, list_sum))
+    @classmethod
+    def split_date(cls, date):
+        SPLIT_DATE = re.split(r'[-/.]', date)
+        print(f'Число - {SPLIT_DATE[0]}\nМесяц - {SPLIT_DATE[1]}\nГод - {SPLIT_DATE[2]}')
 
+    @staticmethod
+    def validation_date(date):
+        try:
+            datetime.datetime.strptime(date, '%d-%m-%Y')
+        except ValueError:
+            print("Неверный формат даты")
+        else:
+            print(date)
 
-a = Matrix([0, 1, 2], [4, 5, 6])
-b = Matrix([6, 5, 4], [2, 1, 0])
-
-print(a, '\n')
-print(b, '\n')
-print(a + b)
+Date.split_date('26-07-2021')
+Date.validation_date('24-05-2021')
